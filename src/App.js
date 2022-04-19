@@ -60,11 +60,27 @@ function App() {
     setFilters({ ...filters, page: newPage })
   }
 
+
+  const handleSortUp = () => {
+    movies.sort((a, b) => parseFloat(b.vote_average) - parseFloat(a.vote_average))
+    setMovies([...movies])
+  }
+  const handleSortDown = () => {
+    movies.sort((a, b) => parseFloat(a.vote_average) - parseFloat(b.vote_average))
+    setMovies([...movies])
+  }
+
   return (
     <div className="app">
-      <HeaderSearch onSearch={handleSearch} onClearSearch={handleClearSearch} />
+      <HeaderSearch
+        onSearch={handleSearch}
+        onClearSearch={handleClearSearch}
+        onSortUp={handleSortUp}
+        onSortDown={handleSortDown}
+      />
       <div className="movie-container">
-        {movies < 0 || movies.map(movie => <Movie key={movie.id} {...movie} />)}
+        {movies < 0 || movies
+          .map(movie => <Movie key={movie.id} {...movie} />)}
       </div>
       <Pagination pagination={pagination} onPageChange={handlePageChange} />
       <Footer />
